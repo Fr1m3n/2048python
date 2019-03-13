@@ -1,12 +1,36 @@
 from pynput import keyboard
 import os
 from random import choice
+from colorama import init, Fore, Back, Style
+
+
+# colorama init
+init(autoreset=True)
 
 NEW_ELEMENTS_CHOICE = [1, 1, 2]
+
+COLORS = {
+    '.': Fore.WHITE,
+    0: Fore.WHITE,
+    1: Fore.WHITE,
+    2: Fore.BLUE,
+    4: Fore.CYAN,
+    8: Fore.GREEN,
+    16: Fore.RED,
+    32: Fore.YELLOW,
+    64: Fore.MAGENTA,
+    128: Fore.LIGHTGREEN_EX,
+    256: Fore.LIGHTBLUE_EX,
+    512: Fore.LIGHTRED_EX,
+    1024: Fore.LIGHTYELLOW_EX,
+    2048: Fore.LIGHTCYAN_EX
+}
 
 FIELD_WIDTH = 3
 FIELD_HEIGHT = 3
 
+
+# generating field
 field = [[0 for j in range(FIELD_WIDTH)] for i in range(FIELD_HEIGHT)]
 
 
@@ -110,21 +134,24 @@ def spawn():
 def render():
     os.system('cls')
     for i in field:
-        s = ''
+        els = []
         for j in i:
             el = j
             if el == 0:
                 el = '.'
-            s += str(el) + ' '
+            el = COLORS[j] + str(el)
 
-        print(s)
+            els.append(str(el))
+        print('')
+        s = ' '.join(['{:^15}' for i in els])
+        # print(s)
+        # print(els)
+        print(s.format(*els))
 
 
 def new_game():
     pass
 
-
-# render()
 
 if __name__ == '__main__':
     spawn()
